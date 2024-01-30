@@ -2,21 +2,21 @@ from tljh.hooks import hookimpl
 import subprocess
 
 @hookimpl
-def tljh_config_post_install(config):
-    """
-    Set JupyterLab to be default
-    """
-    user_environment = config.get('user_environment', {})
-    user_environment['default_app'] = user_environment.get('default_app', 'jupyterlab')
+# def tljh_config_post_install(config):
+#     """
+#     Set JupyterLab to be default
+#     """
+#     user_environment = config.get('user_environment', {})
+#     user_environment['default_app'] = user_environment.get('default_app', 'jupyterlab')
 
-    config['user_environment'] = user_environment
+#     config['user_environment'] = user_environment
  
 @hookimpl
 def tljh_post_install():
     """
     Install docker, docker spawner, and setup the datascience-notebook
     """
-    # first we'll install docker on ubuntu 18.04
+    # first we'll install docker on ubuntu
     # inspired by https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
     # and https://ideonate.com/DockerSpawner-in-TLJH/
     def install_docker():
@@ -48,7 +48,7 @@ def tljh_post_install():
         subprocess.call("sudo /opt/tljh/hub/bin/python3 -m pip install dockerspawner jupyter_client", shell=True)
         tljh_use_docker_spawner()
     
-    # then'll we'll tell TLJH to use docker spawner 
+    # then we'll tell TLJH to use docker spawner 
     # and that the image to use is jupyter/datascience-notebook
     def tljh_use_docker_spawner():
        
@@ -58,7 +58,7 @@ def tljh_post_install():
         # add the details to use docker spawner with the datascience image
         contents = [
             "c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'",
-            "c.DockerSpawner.image_whitelist = ['jupyter/datascience-notebook:r-4.0.3', 'jupyter/datascience-notebook:r-3.6.3']",
+            "c.DockerSpawner.image_whitelist = ['vnmd/neurodesktop:2023-11-28']",
             "from jupyter_client.localinterfaces import public_ips",
             "c.JupyterHub.hub_ip = public_ips()[0]",
             "c.DockerSpawner.name_template = '{prefix}-{username}-{servername}'"
@@ -73,7 +73,7 @@ def tljh_post_install():
 
     # finally we need to download the docker image so it's ready
     def get_docker_image():
-        subprocess.call("sudo docker pull jupyter/datascience-notebook:r-4.0.3", shell=True)
+        subprocess.call("sudo docker pull vnmd/neurodesktop:2023-11-28", shell=True)
         restart_tljh()
         
     # and the restart TLJH and rebuild jupyterlab

@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(
-  name="tljh-datascience",
-  author="KatieSchuler",
+  name="tljh-neurodesk",
+  author="SteffenBollmann",
   version="0.1",
   license="MIT",
-  url="https://github.com/pennchildlanglab/tljh-datascience",
-  entry_points = {"tljh": ["rjulia = tljh_datascience"]},
-  py_modules=["tljh_datascience"]
+  url="https://github.com/NeuroDesk/tljh-neurodesk",
+  entry_points = {"tljh": ["neurodesk = tljh_neurodesk"]},
+  py_modules=["tljh_neurodesk"]
 )
