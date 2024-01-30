@@ -2,14 +2,14 @@ from tljh.hooks import hookimpl
 import subprocess
 
 @hookimpl
-# def tljh_config_post_install(config):
-#     """
-#     Set JupyterLab to be default
-#     """
-#     user_environment = config.get('user_environment', {})
-#     user_environment['default_app'] = user_environment.get('default_app', 'jupyterlab')
+def tljh_config_post_install(config):
+    """
+    Set JupyterLab to be default
+    """
+    user_environment = config.get('user_environment', {})
+    user_environment['default_app'] = user_environment.get('default_app', 'jupyterlab')
 
-#     config['user_environment'] = user_environment
+    config['user_environment'] = user_environment
  
 @hookimpl
 def tljh_post_install():
