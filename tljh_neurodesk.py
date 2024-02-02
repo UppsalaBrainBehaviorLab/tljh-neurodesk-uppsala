@@ -14,7 +14,7 @@ def tljh_config_post_install(config):
 @hookimpl
 def tljh_post_install():
     """
-    Install docker, docker spawner, and setup the datascience-notebook
+    Install docker, docker spawner, and setup the neurodesk-notebook
     """
     # first we'll install docker on ubuntu
     # inspired by https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
@@ -49,13 +49,13 @@ def tljh_post_install():
         tljh_use_docker_spawner()
     
     # then we'll tell TLJH to use docker spawner 
-    # and that the image to use is jupyter/datascience-notebook
+    # and that the image to use is neurodesktop
     def tljh_use_docker_spawner():
        
         # create the dockerspawner config file
         f = open("/opt/tljh/config/jupyterhub_config.d/dockerspawner_tljh_config.py", "w")
         
-        # add the details to use docker spawner with the datascience image
+        # add the details to use docker spawner with the neurodesk image
         contents = [
             "c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'",
             "c.DockerSpawner.image_whitelist = ['vnmd/neurodesktop:2023-11-28']",

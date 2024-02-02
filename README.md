@@ -11,7 +11,7 @@ Include `--plugin tljh-neurodesk` in your TLJH install script. For example, here
 
 curl https://raw.githubusercontent.com/jupyterhub/the-littlest-jupyterhub/master/bootstrap/bootstrap.py \
   | sudo python3 - \
-    --admin admin:password --plugin git+https://github.com/Neurodesk/tljh-neurodesk
+    --admin neurodesk:password --plugin git+https://github.com/Neurodesk/tljh-neurodesk
 ```
 
 
