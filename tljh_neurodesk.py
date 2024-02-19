@@ -31,6 +31,8 @@ def tljh_post_install():
     f.write("\n".join(contents))
     f.close()
 
+    subprocess.call("sudo systemctl start docker", shell=True)
+
     # finally we need to download the docker image so it's ready
     subprocess.call("sudo docker pull vnmd/neurodesktop:2023-11-28", shell=True)
         
