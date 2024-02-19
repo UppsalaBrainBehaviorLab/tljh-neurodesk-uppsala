@@ -12,31 +12,9 @@ def tljh_config_post_install(config):
 @hookimpl
 def tljh_post_install():
     """
-    Install docker, docker spawner, and setup the neurodesk-notebook
+    Setup the neurodesk-notebook
     """
-    # first we'll install docker on ubuntu
-    # inspired by https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
-    # and https://ideonate.com/DockerSpawner-in-TLJH/
-
-    # use packages over https
-    subprocess.call("sudo apt update && sudo apt install apt-transport-https ca-certificates curl software-properties-common", shell=True)
-
-    # add gpg key
-    subprocess.call("curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -", shell=True)
-
-    # add docker repo
-    subprocess.call("sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'", shell=True)
-
-    # install docker
-    subprocess.call("sudo apt update && sudo apt install -y docker-ce", shell=True)
     
-    # then we'll install docker spawner
-    # inspired by https://ideonate.com/DockerSpawner-in-TLJH/
-    subprocess.call("sudo /opt/tljh/hub/bin/python3 -m pip install dockerspawner jupyter_client", shell=True)
-    
-    # then we'll tell TLJH to use docker spawner
-    # and that the image to use is neurodesktop
-
     # create the dockerspawner config file
     f = open("/opt/tljh/config/jupyterhub_config.d/dockerspawner_tljh_config.py", "w")
 
@@ -59,3 +37,9 @@ def tljh_post_install():
     # and the restart TLJH and rebuild jupyterlab
     subprocess.call("sudo tljh-config reload", shell=True)
     
+
+@hookimpl
+def tljh_extra_apt_packages(): return ["docker.io"]
+
+@hookimpl
+def tljh_extra_user_pip_packages(): return ["dockerspawner", "jupyter_client"]
