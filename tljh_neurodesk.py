@@ -6,10 +6,8 @@ def tljh_config_post_install(config):
     """
     Set JupyterLab to be default
     """
-    user_environment = config.get('user_environment', {})
-    user_environment['default_app'] = user_environment.get('default_app', 'jupyterlab')
-
-    config['user_environment'] = user_environment
+    config['user_environment'] = config.get('user_environment', {})
+    config['user_environment']['default_app'] = config['user_environment'].get('default_app', 'jupyterlab')
  
 @hookimpl
 def tljh_post_install():
@@ -19,69 +17,45 @@ def tljh_post_install():
     # first we'll install docker on ubuntu
     # inspired by https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
     # and https://ideonate.com/DockerSpawner-in-TLJH/
-    def install_docker():
-        def start_install():
-            use_packages_over_https()
-            
-        def use_packages_over_https():
-            subprocess.call("sudo apt update && sudo apt install apt-transport-https ca-certificates curl software-properties-common", shell=True)
-            add_gpg_key()
 
-        def add_gpg_key():
-            subprocess.call("curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -", shell=True)
-            add_docker_repo()
+    # use packages over https
+    subprocess.call("sudo apt update && sudo apt install apt-transport-https ca-certificates curl software-properties-common", shell=True)
 
-        def add_docker_repo():
-            subprocess.call("sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'", shell=True)
-            do_install()
-            
-        def do_install():
-            subprocess.call("sudo apt update && sudo apt install -y docker-ce", shell=True)
-            
-        # ok, go!
-        start_install()
-        install_docker_spawner()
+    # add gpg key
+    subprocess.call("curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -", shell=True)
+
+    # add docker repo
+    subprocess.call("sudo add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable'", shell=True)
+
+    # install docker
+    subprocess.call("sudo apt update && sudo apt install -y docker-ce", shell=True)
     
     # then we'll install docker spawner
     # inspired by https://ideonate.com/DockerSpawner-in-TLJH/
-    def install_docker_spawner():
-        subprocess.call("sudo /opt/tljh/hub/bin/python3 -m pip install dockerspawner jupyter_client", shell=True)
-        tljh_use_docker_spawner()
+    subprocess.call("sudo /opt/tljh/hub/bin/python3 -m pip install dockerspawner jupyter_client", shell=True)
     
-    # then we'll tell TLJH to use docker spawner 
+    # then we'll tell TLJH to use docker spawner
     # and that the image to use is neurodesktop
-    def tljh_use_docker_spawner():
-       
-        subprocess.call("rm -rf /opt/tljh/config/jupyterhub_config.d/dockerspawner_tljh_config.py")
 
-        # create the dockerspawner config file
-        f = open("/opt/tljh/config/jupyterhub_config.d/dockerspawner_tljh_config.py", "w")
-        
-        # add the details to use docker spawner with the neurodesk image
-        contents = [
-            "c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'",
-            "c.DockerSpawner.image_whitelist = ['vnmd/neurodesktop:2023-11-28', 'jupyter/datascience-notebook:r-4.0.3', 'jupyter/datascience-notebook:r-3.6.3']",
-            "from jupyter_client.localinterfaces import public_ips",
-            "c.JupyterHub.hub_ip = public_ips()[0]",
-            "c.DockerSpawner.name_template = '{prefix}-{username}-{servername}'"
-        ]
-        
-        # add to our config file and close
-        for line in contents:
-            f.write(line)
-            f.write("\n")
-        f.close()
-        get_docker_image()
+    # create the dockerspawner config file
+    f = open("/opt/tljh/config/jupyterhub_config.d/dockerspawner_tljh_config.py", "w")
+
+    # add the details to use docker spawner with the neurodesk image
+    contents = [
+        "c.JupyterHub.spawner_class = 'dockerspawner.DockerSpawner'",
+        "c.DockerSpawner.image_whitelist = ['vnmd/neurodesktop:2023-11-28', 'jupyter/datascience-notebook:r-4.0.3', 'jupyter/datascience-notebook:r-3.6.3']",
+        "from jupyter_client.localinterfaces import public_ips",
+        "c.JupyterHub.hub_ip = public_ips()[0]",
+        "c.DockerSpawner.name_template = '{prefix}-{username}-{servername}'"
+    ]
+
+    # add to our config file and close
+    f.write("\n".join(contents))
+    f.close()
 
     # finally we need to download the docker image so it's ready
-    def get_docker_image():
-        subprocess.call("sudo docker pull vnmd/neurodesktop:2023-11-28", shell=True)
-        restart_tljh()
+    subprocess.call("sudo docker pull vnmd/neurodesktop:2023-11-28", shell=True)
         
     # and the restart TLJH and rebuild jupyterlab
-    def restart_tljh():
-        subprocess.call("sudo tljh-config reload", shell=True)
-   
-    # kick things off by installing docker
-    install_docker()
+    subprocess.call("sudo tljh-config reload", shell=True)
     
