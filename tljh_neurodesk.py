@@ -8,7 +8,7 @@ def tljh_config_post_install(config):
     """
     config['user_environment'] = config.get('user_environment', {})
     config['user_environment']['default_app'] = config['user_environment'].get('default_app', 'jupyterlab')
- 
+
 @hookimpl
 def tljh_post_install():
     """
@@ -44,4 +44,4 @@ def tljh_post_install():
 def tljh_extra_apt_packages(): return ["docker.io"]
 
 @hookimpl
-def tljh_extra_user_pip_packages(): return ["dockerspawner", "jupyter_client"]
+def tljh_extra_hub_pip_packages(): return ["dockerspawner", "jupyter_client"]
