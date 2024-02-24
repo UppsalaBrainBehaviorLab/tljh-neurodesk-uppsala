@@ -19,4 +19,4 @@ def tljh_custom_jupyterhub_config(c):
     c.JupyterHub.hub_ip = public_ips()[0]
     c.JupyterHub.spawner_class = "dockerspawner.DockerSpawner"
     c.DockerSpawner.name_template = "{username}-{imagename}"
-    c.DockerSpawner.image_whitelist = images
+    c.DockerSpawner.allowed_images = images
