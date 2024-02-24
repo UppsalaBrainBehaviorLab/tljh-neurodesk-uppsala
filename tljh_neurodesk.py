@@ -20,3 +20,5 @@ def tljh_custom_jupyterhub_config(c):
     c.JupyterHub.spawner_class = "dockerspawner.DockerSpawner"
     c.DockerSpawner.name_template = "{username}-{imagename}"
     c.DockerSpawner.allowed_images = images
+    c.DockerSpawner.extra_host_config = {"privileged": True}
+    c.DockerSpawner.extra_create_kwargs = {"user": "root"}
