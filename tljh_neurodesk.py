@@ -22,3 +22,4 @@ def tljh_custom_jupyterhub_config(c):
     c.DockerSpawner.allowed_images = images
     c.DockerSpawner.extra_host_config = {"privileged": True}
     c.DockerSpawner.extra_create_kwargs = {"user": "root"}
+    c.DockerSpawner.volumes = {"{prefix}-{username}": "/home/jovyan"}
