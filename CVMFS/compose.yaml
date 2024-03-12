@@ -1,0 +1,23 @@
+services:
+  CVMFS:
+    image: cvmfs/service
+    cap_add: [SYS_ADMIN]
+    devices: [/dev/fuse]
+    restart: unless-stopped
+    depends_on: [neurodesk]
+    security_opt:
+      - apparmor=CVMFS
+    environment:
+      - CVMFS_HTTP_PROXY=DIRECT
+      - CVMFS_REPOSITORIES=neurodesk.ardc.edu.au
+    volumes:
+      - /cvmfs:/cvmfs:shared
+      - config:/etc/cvmfs
+  neurodesk:
+    image:   vnmd/neurodesktop
+    command: nop
+    volumes:
+      - config:/etc/cvmfs
+
+volumes:
+  config:

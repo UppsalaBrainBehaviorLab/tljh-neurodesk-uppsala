@@ -1,0 +1,20 @@
+profile CVMFS {
+	network,
+	signal (receive),
+	capability sys_admin,
+	mount  fstype=fuse -> /cvmfs/**,
+	umount fstype=fuse    /cvmfs/**,
+
+	/bin/* ix,
+	/usr/bin/* rix,
+	/usr/lib64/* rm,
+
+	/cvmfs** w,
+	/dev/fuse rw,
+	/dev/null rw,
+	/var/lib** w,
+	/var/*/cvmfs** rwk,
+	/var/log/boot.log w,
+	/etc/cvmfs/** rw,
+	/etc/* r,
+}
