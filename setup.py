@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
   name="tljh-neurodesk",
-  author="SteffenBollmann",
+  author="Steffen Bollmann and Edan Hamilton",
   version="0.1",
   license="MIT",
   url="https://github.com/NeuroDesk/tljh-neurodesk",
