@@ -17,6 +17,14 @@ curl https://raw.githubusercontent.com/jupyterhub/the-littlest-jupyterhub/master
 ```
 
 
+## Update
+```
+git clone https://github.com/NeuroDesk/tljh-neurodesk
+cd tljh-neurodesk/
+wget https://raw.githubusercontent.com/jupyterhub/the-littlest-jupyterhub/master/bootstrap/bootstrap.py
+sudo python3 bootstrap.py --plugin .
+```
+
 ## Attribution
 
 This plugin was inspired by https://github.com/pennchildlanglab/tljh-datascience which was inspired by [this Ideonate post](https://ideonate.com/DockerSpawner-in-TLJH/) and the [Rxns stack plugin](https://github.com/sustainable-processes/tljh-rxns)
