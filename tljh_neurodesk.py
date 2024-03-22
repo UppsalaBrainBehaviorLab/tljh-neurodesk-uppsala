@@ -1,7 +1,7 @@
 from tljh.hooks import hookimpl as hook
 import os
 
-images = ["vnmd/neurodesktop"]
+images = ["vnmd/neurodesktop", "jupyter/datascience-notebook"]
 
 @hook
 def tljh_post_install():  # Setup the neurodesk-notebook
