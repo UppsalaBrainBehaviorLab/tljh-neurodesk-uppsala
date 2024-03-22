@@ -2,6 +2,8 @@
 
 Tells TLJH to use [DockerSpawner](https://jupyterhub-dockerspawner.readthedocs.io/en/latest/) to spin up [vnmd/neurodesktop](https://hub.docker.com/r/vnmd/neurodesktop/tags) containers for each user. 
 
+## System Requirements
+TLJH and the neurodesk plugin require Ubuntu 20.04+ or Debian 11+
 
 ## Install
 
