@@ -1,16 +1,16 @@
 from tljh.hooks import hookimpl as hook
-import os
+import os, shutil
 
 image = "vnmd/neurodesktop"
 
 @hook
 def tljh_post_install():  # Setup the neurodesk-notebook
     os    .system("sudo systemctl start docker\n" +
-                  "sudo docker pull image")
+                 f"sudo docker pull {image}")
 
     if os.path.isdir("/etc/apparmor.d"):
         os.chdir(__import__("CVMFS").__path__[0])
-        os.replace("apparmor", "/etc/apparmor.d/CVMFS")
+        shutil.copyfile("apparmor", "/etc/apparmor.d/CVMFS")
         os.system("""sudo apparmor_parser -r /etc/apparmor.d/CVMFS
             docker-compose up -d""")
 
