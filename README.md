@@ -16,6 +16,8 @@ curl https://raw.githubusercontent.com/jupyterhub/the-littlest-jupyterhub/master
     --admin neurodesk:password --plugin git+https://github.com/Neurodesk/tljh-neurodesk
 ```
 
+Now you can reach jupyterlab on your server. If it doesn't work yet, repeat the above one more time. If it still doesn't work check that port 80 is open in the firewall.
+
 ## Security
 
 Note that this setup doesn't isolate users from each other and the desktop runs effectively with root permissions for everyone. Only use this setup in an environment where you can trust every user using the TLJH instance.
