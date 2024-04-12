@@ -27,6 +27,10 @@ def tljh_custom_jupyterhub_config(c):
     c.JupyterHub.spawner_class = "dockerspawner.DockerSpawner"
     c.DockerSpawner.name_template = "{username}-{imagename}"
     c.DockerSpawner.image = image
+    c.DockerSpawner.extra_host_config = {
+        "security_opt": ["apparmor=unconfined"],
+        "cap_add": ["SYS_ADMIN"]
+    }
     c.DockerSpawner.extra_create_kwargs = {"user": "root"}
     c.DockerSpawner.volumes = {
         "{prefix}-{username}": "/home/jovyan",
