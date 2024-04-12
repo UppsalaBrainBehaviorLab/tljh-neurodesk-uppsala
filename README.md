@@ -16,6 +16,9 @@ curl https://raw.githubusercontent.com/jupyterhub/the-littlest-jupyterhub/master
     --admin neurodesk:password --plugin git+https://github.com/Neurodesk/tljh-neurodesk
 ```
 
+## Security
+
+Note that this setup doesn't isolate users from each other and the desktop runs effectively with root permissions for everyone. Only use this setup in an environment where you can trust every user using the TLJH instance.
 
 ## Update
 ```
