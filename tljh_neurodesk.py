@@ -12,7 +12,7 @@ def tljh_post_install():  # Setup the neurodesk-notebook
         os.chdir(__import__("CVMFS").__path__[0])
         shutil.copyfile("apparmor", "/etc/apparmor.d/CVMFS")
         os.system("""sudo apparmor_parser -r /etc/apparmor.d/CVMFS
-            docker-compose up -d""")
+            docker compose up -d""")
 
 @hook
 def tljh_extra_apt_packages(): return ["docker.io", "docker-compose"]
