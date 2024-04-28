@@ -34,7 +34,6 @@ def tljh_custom_jupyterhub_config(c):
     c.DockerSpawner.extra_create_kwargs = {"user": "root"}
     c.DockerSpawner.volumes = {
         "{prefix}-{username}": "/home/jovyan",
-        "/storage": "/home/jovyan/neurodesktop-stora",
-        "/storage/{username}": "/data",
+        "/storage/{username}": "/storage/andfr548",
         "/cvmfs": "/cvmfs"
     }
