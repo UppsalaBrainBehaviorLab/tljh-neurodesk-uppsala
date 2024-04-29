@@ -38,6 +38,6 @@ def tljh_custom_jupyterhub_config(c):
         "/cvmfs": "/cvmfs"
     }
     c.DockerSpawner.environment = {
-        "NB_UID": getpwnam({USERNAME}.pw_uid,
-        "NB_GID": 200,
+        "NB_UID": getpwnam({USERNAME}).pw_uid,
+        "NB_GID": 200
     }
