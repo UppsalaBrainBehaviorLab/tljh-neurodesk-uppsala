@@ -1,5 +1,6 @@
 from tljh.hooks import hookimpl as hook
 import os, shutil
+import pwd
 
 image = "vnmd/neurodesktop"
 
@@ -42,7 +43,7 @@ def tljh_custom_jupyterhub_config(c):
 @hook
 def my_hook(spawner):
     username = spawner.user.name
-    uid = getpwnam(username)[2]
+    uid = pwd.getpwnam(username)[2]
     spawner.environment['NB_UID'] = uid
     print(spawner.environment)
 
