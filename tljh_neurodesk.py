@@ -43,6 +43,6 @@ def tljh_custom_jupyterhub_config(c):
 def my_hook(spawner):
     username = spawner.user.name
     uid = getpwnam(username)[2]
-    c.DockerSpawner.environment['NB_UID'] = uid
-    print(c.DockerSpawner.environment)
+    spawner.environment['NB_UID'] = uid
+    print(spawner.environment)
 
