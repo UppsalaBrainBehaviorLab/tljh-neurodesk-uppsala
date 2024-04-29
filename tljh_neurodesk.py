@@ -34,16 +34,7 @@ def tljh_custom_jupyterhub_config(c):
     c.DockerSpawner.extra_create_kwargs = {"user": "root"}
     c.DockerSpawner.volumes = {
         "{prefix}-{username}": "/home/jovyan",
-        "/storage/{username}": {"bind": "/data", "mode": "rw"},
         "/storage/{username}": "/data",
         "/cvmfs": "/cvmfs"
     }
 
-@hook
-def my_hook(spawner):
-    username = spawner.user.name
-    uid = getpwnam(username).pw_uid
-    spawner.environment['NB_UID'] = uid
-    gid = getpwnam(username).pw_gid
-    spawner.environment['NB_GID'] = gid
-    print(spawner.environment)
