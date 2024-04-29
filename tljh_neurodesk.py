@@ -40,7 +40,6 @@ def tljh_custom_jupyterhub_config(c):
     }
     c.DockerSpawner.pre_spawn_hook = my_hook
 
-@hook
 def my_hook(spawner):
     username = spawner.user.name
     uid = pwd.getpwnam(username)[2]
