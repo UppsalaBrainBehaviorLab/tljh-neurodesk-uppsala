@@ -38,6 +38,7 @@ def tljh_custom_jupyterhub_config(c):
         "/storage/{username}": "/data",
         "/cvmfs": "/cvmfs"
     }
+    c.Docker.environment = {"NB_UID": 5000}
     c.DockerSpawner.pre_spawn_hook = my_hook
 
 def my_hook(spawner):
