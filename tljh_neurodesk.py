@@ -38,6 +38,7 @@ def tljh_custom_jupyterhub_config(c):
         "/cvmfs": "/cvmfs"
     }
 
+@hook
 def my_hook(spawner):
     username = spawner.user.name
     uid = getpwnam(username)[2]
