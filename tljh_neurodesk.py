@@ -45,6 +45,5 @@ def my_hook(spawner):
     uid = pwd.getpwnam(username)[2]
     gid = pwd.getpwnam(username)[3]
     spawner.environment['NB_UID'] = uid
-    spawner.environment['NB_GID'] = gid
     print(spawner.environment)
 
