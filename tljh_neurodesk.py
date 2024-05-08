@@ -32,7 +32,7 @@ def tljh_custom_jupyterhub_config(c):
         "security_opt": ["apparmor=unconfined"],
         "cap_add": ["SYS_ADMIN"]
     }
-    c.DockerSpawner.extra_create_kwargs = {"user": "root"}
+    c.DockerSpawner.extra_create_kwargs = {"user": "root", "mac_address": "02:42:ac:11:00:02"}
     c.DockerSpawner.volumes = {
         "{prefix}-{username}": "/home/jovyan",
         "/storage/{username}": "/data",
