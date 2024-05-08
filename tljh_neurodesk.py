@@ -2,7 +2,7 @@ from tljh.hooks import hookimpl as hook
 import os, shutil
 import pwd
 
-image = "vnmd/neurodesktop"
+allowed_images = ["vnmd/neurodesktop:latest", "vnmd/neurodesktop:2023-11-28"]
 
 @hook
 def tljh_post_install():  # Setup the neurodesk-notebook
@@ -27,7 +27,7 @@ def tljh_custom_jupyterhub_config(c):
     c.JupyterHub.hub_ip = public_ips()[0]
     c.JupyterHub.spawner_class = "dockerspawner.DockerSpawner"
     c.DockerSpawner.name_template = "{username}-{imagename}"
-    c.DockerSpawner.image = image
+    c.DockerSpawner.allowed_images=allowed_images
     c.DockerSpawner.extra_host_config = {
         "security_opt": ["apparmor=unconfined"],
         "cap_add": ["SYS_ADMIN"]
