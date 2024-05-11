@@ -2,7 +2,7 @@ from tljh.hooks import hookimpl as hook
 import os, shutil
 import pwd
 
-allowed_images = ["vnmd/neurodesktop:latest", "jupyter/datascience-notebook", "vnmd/neurodesktop:2023-11-28"]
+allowed_images = ["vnmd/neurodesktop:latest", "quay.io/jupyter/datascience-notebook", "vnmd/neurodesktop:2023-11-28"]
 
 @hook
 def tljh_post_install():  # Setup the neurodesk-notebook
