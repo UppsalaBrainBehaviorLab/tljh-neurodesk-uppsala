@@ -2,12 +2,11 @@ from tljh.hooks import hookimpl as hook
 import os, shutil
 import pwd
 
-allowed_images = ["vnmd/neurodesktop:latest", "quay.io/jupyter/datascience-notebook", "vnmd/neurodesktop:2023-11-28"]
+allowed_images = ["vnmd/neurodesktop:latest", "jupyter/datascience-notebook:r-4.0.3", "vnmd/neurodesktop:2023-11-28"]
 
 @hook
 def tljh_post_install():  # Setup the neurodesk-notebook
-    os    .system("sudo systemctl start docker\n" +
-                 f"sudo docker pull {image}")
+    os    .system("sudo systemctl start docker\n")
 
     if os.path.isdir("/etc/apparmor.d"):
         os.chdir(__import__("CVMFS").__path__[0])
